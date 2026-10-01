@@ -1,0 +1,55 @@
+<script setup>
+defineProps({
+  categories: { type: Array, default: () => [] },
+  tags: { type: Array, default: () => [] },
+  stats: { type: Object, default: () => ({}) },
+  activeCategory: { type: [Number, String], default: null },
+})
+const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
+</script>
+
+<template>
+  <aside>
+    <div class="side-card">
+      <h3>分类</h3>
+      <router-link
+        v-for="cat in categories"
+        :key="cat.id"
+        class="cat-row"
+        :class="{ active: String(activeCategory) === String(cat.id) }"
+        :to="{ path: '/', query: { category_id: cat.id } }"
+      >
+        <span>{{ cat.name }}</span>
+        <span class="n">{{ cat.article_count }}</span>
+      </router-link>
+      <div v-if="!categories.length" class="empty" style="padding: 8px 0">暂无分类</div>
+    </div>
+
+    <div class="side-card">
+      <h3>标签</h3>
+      <div class="tag-cloud">
+        <a v-for="tag in tags" :key="tag.id" class="chip" href="javascript:void(0)" @click="emit('filter-tag', tag.id)">
+          # {{ tag.name }}
+        </a>
+        <span v-if="!tags.length" class="empty" style="padding: 4px 0">暂无标签</span>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h3>概览</h3>
+      <div class="cat-row" style="cursor: default">
+        <span>文章</span><span class="n">{{ stats.article_count ?? '-' }}</span>
+      </div>
+      <div class="cat-row" style="cursor: default">
+        <span>分类</span><span class="n">{{ stats.category_count ?? '-' }}</span>
+      </div>
+      <div class="cat-row" style="cursor: default">
+        <span>标签</span><span class="n">{{ stats.tag_count ?? '-' }}</span>
+      </div>
+    </div>
+
+    <div v-if="activeCategory" class="side-card" style="text-align: center">
+      <a href="javascript:void(0)" class="chip" @click="emit('clear')">✕ 清除分类筛选</a>
+    </div>
+  </aside>
+</template>
