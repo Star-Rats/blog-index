@@ -835,7 +835,8 @@ button {
 @media (min-width: 1101px) {
   .article-with-toc {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 185px;
+    /* 大纲列随内容自适应（上限 260px），短大纲不留右侧死空间 */
+    grid-template-columns: minmax(0, 1fr) fit-content(260px);
     gap: 24px;
     align-items: start;
   }
