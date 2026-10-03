@@ -9,6 +9,21 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      window.__errs = [];
+      window.addEventListener('error', function (e) { window.__errs.push(String(e.message) + ' @ ' + (e.filename || '') + ':' + e.lineno); });
+      window.addEventListener('unhandledrejection', function (e) { window.__errs.push('promise: ' + String(e.reason)); });
+      (function () {
+        var orig = console.error;
+        console.error = function () {
+          var args = Array.prototype.slice.call(arguments).map(function (a) {
+            try { return typeof a === 'string' ? a : JSON.stringify(a); } catch (err) { return String(a); }
+          }).join(' | ');
+          window.__errs.push('console.error: ' + args.slice(0, 500));
+          orig.apply(console, arguments);
+        };
+      })();
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

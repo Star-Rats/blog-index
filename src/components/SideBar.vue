@@ -1,10 +1,20 @@
+<script setup>
+import { onBeforeUnmount, onMounted } from 'vue'
+
+defineProps({
+  categories: { type: Array, default: () => [] },
+  tags: { type: Array, default: () => [] },
+  stats: { type: Object, default: () => ({}) },
+  activeCategory: { type: [Number, String], default: null },
+})
+const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
+
 // ---- 侧栏跟随滚动（transform 方案，兼容侧栏高于视口的情况）----
 // 滚动时侧栏先随内容上移；其底部到达视口底部后钉住跟随，右侧不会出现空白
 let onScrollHandler = null
 let resizeObs = null
 let mainObs = null
 let asideTopDoc = 0
-let maxTravel = 0
 
 // 清除 transform 后测量真实文档位置与行程（resize/内容高度变化时重测）
 function measure() {
@@ -17,14 +27,15 @@ function measure() {
   }
   aside.style.transform = "none"
   asideTopDoc = aside.getBoundingClientRect().top + window.scrollY
-  maxTravel = Math.max(main.offsetHeight - aside.offsetHeight, 0)
   apply()
 }
 
 function apply() {
   const aside = document.querySelector(".page-layout > aside")
   if (!aside || window.innerWidth <= 720) return
-  const y = Math.min(Math.max(window.scrollY - asideTopDoc + 76, 0), maxTravel)
+  // 底部跟随：侧栏底部始终钉在视口底部上方 24px（顶部不足 76px 时保持原位）
+  const vh = window.innerHeight
+  const y = Math.max(window.scrollY - asideTopDoc - aside.offsetHeight + vh - 24, 0)
   aside.style.transform = `translateY(${y}px)`
 }
 
