@@ -24,11 +24,9 @@ function syncNow() {
     return
   }
   aside.style.transform = "none"
-  // 底部跟随：侧栏底部到达视口底部上方 24px 后钉住跟随（此前保持自然位置）
-  const y = Math.max(
-    window.scrollY - aside.getBoundingClientRect().top - aside.offsetHeight + window.innerHeight - 24,
-    0,
-  )
+  // 底部跟随：滚动超过侧栏底部后，钉在视口底部上方 24px（doc 坐标一次性换算，避免 2 倍速）
+  const topDoc = aside.getBoundingClientRect().top + window.scrollY
+  const y = Math.max(window.scrollY - topDoc - aside.offsetHeight + window.innerHeight - 24, 0)
   aside.style.transform = `translateY(${y}px)`
 }
 
