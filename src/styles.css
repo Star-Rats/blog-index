@@ -609,6 +609,149 @@ button {
   color: var(--accent);
 }
 
+/* ===== 移动端适配（≤720px：手机竖屏） ===== */
+@media (max-width: 720px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  /* 顶栏：两行布局，搜索框收缩 */
+  .site-header .inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 0;
+    row-gap: 6px;
+  }
+
+  .logo {
+    font-size: 19px;
+    white-space: nowrap;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 2px;
+  }
+
+  .nav a {
+    padding: 6px 12px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .search-box {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .search-box input {
+    width: 120px;
+  }
+
+  .search-box input:focus {
+    width: 150px;
+  }
+
+  /* hero 收紧 */
+  .hero {
+    padding: 30px 0 0;
+  }
+
+  .hero h1 {
+    font-size: 25px;
+  }
+
+  .hero p {
+    font-size: 13px;
+  }
+
+  .hero .stats {
+    margin-top: 14px;
+    padding: 7px 6px;
+  }
+
+  .hero .stats span {
+    padding: 0 13px;
+  }
+
+  /* 内容区单列，隐藏侧栏（分类/标签浏览走归档聚合页） */
+  .page-layout {
+    grid-template-columns: 1fr;
+    padding: 20px 0 40px;
+    gap: 0;
+  }
+
+  .page-layout > aside {
+    display: none;
+  }
+
+  .section-head h2 {
+    font-size: 16px;
+  }
+
+  /* 文章卡片：封面在上，正文在下 */
+  .article-card {
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .article-card .cover {
+    width: 100%;
+    height: 150px;
+  }
+
+  .article-card .no-cover {
+    width: 100%;
+    height: 110px;
+    font-size: 32px;
+  }
+
+  .article-card h2 {
+    font-size: 17px;
+  }
+
+  /* 文章详情页 */
+  .article-page {
+    padding: 26px 18px;
+    margin: 18px 0 44px;
+  }
+
+  .article-page h1 {
+    font-size: 22px;
+  }
+
+  .meta-line {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .prose {
+    font-size: 15px;
+  }
+
+  .prose h1 { font-size: 20px; }
+  .prose h2 { font-size: 18px; }
+  .prose h3 { font-size: 16.5px; }
+
+  .prose pre {
+    font-size: 12.5px;
+    padding: 14px;
+  }
+
+  /* 归档/聚合 */
+  .archive-year {
+    font-size: 18px;
+  }
+
+  .mode-switch button {
+    padding: 6px 13px;
+    font-size: 12.5px;
+  }
+}
+
 /* ===== 归档 ===== */
 .archive-year {
   font-family: var(--font-serif);
