@@ -12,53 +12,49 @@ const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
 // ---- 侧栏跟随滚动（transform 方案，兼容侧栏高于视口的情况）----
 // 滚动时侧栏先随内容上移；其底部到达视口底部后钉住跟随，右侧不会出现空白
 let onScrollHandler = null
-let resizeObs = null
-let mainObs = null
-let asideTopDoc = 0
+let ticking = false
 
-// 清除 transform 后测量真实文档位置与行程（resize/内容高度变化时重测）
-function measure() {
-  const aside = document.querySelector(".page-layout > aside")
-  const main = document.querySelector(".page-layout > main")
-  if (!aside || !main) return
-  if (window.innerWidth <= 720) {
-    aside.style.transform = ""
-    return
-  }
-  aside.style.transform = "none"
-  asideTopDoc = aside.getBoundingClientRect().top + window.scrollY
-  apply()
-}
-
-function apply() {
+// 每次都清除 transform 现场重测：不缓存任何位置状态，初次加载/数据变化后计算都准确
+function syncNow() {
   const aside = document.querySelector(".page-layout > aside")
   if (!aside || window.innerWidth <= 720) return
-  // 底部跟随：侧栏底部始终钉在视口底部上方 24px（顶部不足 76px 时保持原位）
-  const vh = window.innerHeight
-  const y = Math.max(window.scrollY - asideTopDoc - aside.offsetHeight + vh - 24, 0)
+  aside.style.transform = "none"
+  // 底部跟随：侧栏底部到达视口底部上方 24px 后钉住跟随（此前保持自然位置）
+  const y = Math.max(
+    window.scrollY - aside.getBoundingClientRect().top - aside.offsetHeight + window.innerHeight - 24,
+    0,
+  )
   aside.style.transform = `translateY(${y}px)`
 }
 
+function onScroll() {
+  if (ticking) return
+  ticking = true
+  requestAnimationFrame(() => {
+    ticking = false
+    syncNow()
+  })
+}
+
 onMounted(() => {
-  onScrollHandler = () => requestAnimationFrame(apply)
+  onScrollHandler = onScroll
   window.addEventListener("scroll", onScrollHandler, { passive: true })
-  window.addEventListener("resize", () => measure())
+  window.addEventListener("resize", onScroll)
+  window.addEventListener("load", onScroll)
   if (window.ResizeObserver) {
-    resizeObs = new ResizeObserver(() => measure())
+    const obs = new ResizeObserver(onScroll)
     const layout = document.querySelector(".page-layout")
-    if (layout) resizeObs.observe(layout)
+    if (layout) obs.observe(layout)
     const main = document.querySelector(".page-layout > main")
-    if (main) mainObs = new ResizeObserver(() => measure())
-    if (main) mainObs.observe(main)
+    if (main) obs.observe(main)
   }
-  measure()
+  syncNow()
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", onScrollHandler)
-  window.removeEventListener("resize", measure)
-  resizeObs?.disconnect()
-  mainObs?.disconnect()
+  window.removeEventListener("resize", onScroll)
+  window.removeEventListener("load", onScroll)
   const aside = document.querySelector(".page-layout > aside")
   if (aside) aside.style.transform = ""
 })
