@@ -852,17 +852,24 @@ button {
 .toc-fade-enter-active, .toc-fade-leave-active { transition: opacity 0.2s; }
 .toc-fade-enter-from, .toc-fade-leave-to { opacity: 0; }
 
-@media (min-width: 1101px) {
-  .article-with-toc {
-    display: grid;
-    /* 大纲列随内容自适应（上限 260px），短大纲不留右侧死空间 */
-    grid-template-columns: minmax(0, 1fr) fit-content(260px);
-    gap: 24px;
-    align-items: start;
+/* 大纲固定于窗口右缘（宽窗口显示），不占版心宽度 */
+@media (min-width: 1451px) {
+  .toc-card {
+    position: fixed;
+    top: 88px;
+    right: 24px;
+    width: 230px;
+    max-height: calc(100vh - 130px);
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1450px) {
+  .toc-card { display: none; }
+  .toc-fab { display: block; }
+}
+
+@media (max-width: 1450px) {
+  .toc-card { display: none; }
   .toc-fab { display: block; }
 }
 
