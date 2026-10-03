@@ -610,6 +610,128 @@ button {
 }
 
 /* ===== 移动端适配（≤720px：手机竖屏） ===== */
+/* ===== 文章大纲（TOC） ===== */
+.article-with-toc {
+  position: relative;
+}
+
+.toc-card {
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+  padding: 4px 0 4px 18px;
+}
+
+.toc-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--faint);
+  margin-bottom: 10px;
+}
+
+.toc-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-item {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 5px 10px;
+  border-left: 2px solid transparent;
+  margin-left: -19px;
+  cursor: pointer;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toc-item.lv3 { padding-left: 24px; }
+.toc-item.lv4 { padding-left: 38px; font-size: 12.5px; }
+
+.toc-item:hover { color: var(--ink); }
+
+.toc-item.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 500;
+}
+
+/* 移动端浮动入口与抽屉 */
+.toc-fab {
+  display: none;
+  position: fixed;
+  right: 18px;
+  bottom: 26px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card);
+  color: var(--accent);
+  box-shadow: var(--shadow), 0 0 0 1px var(--border);
+  font-size: 20px;
+  z-index: 60;
+}
+
+.toc-mobile-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 39, 46, 0.45);
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+}
+
+.toc-mobile-panel {
+  width: 100%;
+  max-height: 65vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: 16px 16px 0 0;
+  padding: 18px 18px 28px;
+}
+
+.toc-mobile-panel ul { list-style: none; margin: 0; padding: 0; }
+
+.toc-mobile-panel .toc-item {
+  padding: 9px 10px;
+  margin-left: 0;
+  border-left: none;
+  border-radius: 8px;
+  white-space: normal;
+}
+
+.toc-mobile-panel .toc-item.lv3 { padding-left: 26px; }
+.toc-mobile-panel .toc-item.lv4 { padding-left: 42px; }
+
+.toc-mobile-panel .toc-item.active {
+  background: var(--accent-soft);
+  border-left: none;
+}
+
+.toc-fade-enter-active, .toc-fade-leave-active { transition: opacity 0.2s; }
+.toc-fade-enter-from, .toc-fade-leave-to { opacity: 0; }
+
+@media (min-width: 1101px) {
+  .article-with-toc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 28px;
+    align-items: start;
+  }
+}
+
+@media (max-width: 720px) {
+  .toc-fab { display: block; }
+}
+
+/* ===== 移动端适配（≤720px：手机竖屏） ===== */
 @media (max-width: 720px) {
   .container {
     padding: 0 16px;
