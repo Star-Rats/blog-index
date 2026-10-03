@@ -611,6 +611,19 @@ button {
 
 /* ===== 移动端适配（≤720px：手机竖屏） ===== */
 /* ===== 侧栏装饰 ===== */
+/* 侧栏整栏吸附（紧凑后高度 ≤ 视口），滚动时始终完整可见 */
+.page-layout > aside {
+  position: sticky;
+  top: 76px;
+}
+
+.side-card {
+  padding: 16px;
+}
+
+
+
+/* ===== 侧栏装饰 ===== */
 .side-card {
   padding: 16px;
 }
@@ -619,27 +632,27 @@ button {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius);
-  padding: 16px 16px 12px;
-  margin-bottom: 16px;
+  padding: 14px 14px 10px;
+  margin-bottom: 14px;
   background: linear-gradient(155deg, var(--accent-soft) 0%, rgba(253, 238, 232, 0.35) 100%);
 }
 
 .side-quote .q-mark {
   font-family: var(--font-serif);
-  font-size: 38px;
+  font-size: 30px;
   line-height: 1;
   color: var(--accent);
   opacity: 0.45;
   display: block;
-  height: 22px;
+  height: 18px;
 }
 
 .side-quote p {
   font-family: var(--font-serif);
   font-size: 14px;
-  line-height: 2;
+  line-height: 1.9;
   color: #6b5d57;
-  margin: 2px 0 10px;
+  margin: 2px 0 8px;
 }
 
 .side-quote .q-from {
