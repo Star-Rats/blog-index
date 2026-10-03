@@ -611,12 +611,16 @@ button {
 
 /* ===== 移动端适配（≤720px：手机竖屏） ===== */
 /* ===== 侧栏装饰 ===== */
+.side-card {
+  padding: 16px;
+}
+
 .side-quote {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius);
-  padding: 18px 18px 14px;
-  margin-bottom: 20px;
+  padding: 16px 16px 12px;
+  margin-bottom: 16px;
   background: linear-gradient(155deg, var(--accent-soft) 0%, rgba(253, 238, 232, 0.35) 100%);
 }
 

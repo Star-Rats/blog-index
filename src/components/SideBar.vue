@@ -1,11 +1,56 @@
-<script setup>
-defineProps({
-  categories: { type: Array, default: () => [] },
-  tags: { type: Array, default: () => [] },
-  stats: { type: Object, default: () => ({}) },
-  activeCategory: { type: [Number, String], default: null },
+// ---- 侧栏跟随滚动（transform 方案，兼容侧栏高于视口的情况）----
+// 滚动时侧栏先随内容上移；其底部到达视口底部后钉住跟随，右侧不会出现空白
+let onScrollHandler = null
+let resizeObs = null
+let mainObs = null
+let asideTopDoc = 0
+let maxTravel = 0
+
+// 清除 transform 后测量真实文档位置与行程（resize/内容高度变化时重测）
+function measure() {
+  const aside = document.querySelector(".page-layout > aside")
+  const main = document.querySelector(".page-layout > main")
+  if (!aside || !main) return
+  if (window.innerWidth <= 720) {
+    aside.style.transform = ""
+    return
+  }
+  aside.style.transform = "none"
+  asideTopDoc = aside.getBoundingClientRect().top + window.scrollY
+  maxTravel = Math.max(main.offsetHeight - aside.offsetHeight, 0)
+  apply()
+}
+
+function apply() {
+  const aside = document.querySelector(".page-layout > aside")
+  if (!aside || window.innerWidth <= 720) return
+  const y = Math.min(Math.max(window.scrollY - asideTopDoc + 76, 0), maxTravel)
+  aside.style.transform = `translateY(${y}px)`
+}
+
+onMounted(() => {
+  onScrollHandler = () => requestAnimationFrame(apply)
+  window.addEventListener("scroll", onScrollHandler, { passive: true })
+  window.addEventListener("resize", () => measure())
+  if (window.ResizeObserver) {
+    resizeObs = new ResizeObserver(() => measure())
+    const layout = document.querySelector(".page-layout")
+    if (layout) resizeObs.observe(layout)
+    const main = document.querySelector(".page-layout > main")
+    if (main) mainObs = new ResizeObserver(() => measure())
+    if (main) mainObs.observe(main)
+  }
+  measure()
 })
-const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", onScrollHandler)
+  window.removeEventListener("resize", measure)
+  resizeObs?.disconnect()
+  mainObs?.disconnect()
+  const aside = document.querySelector(".page-layout > aside")
+  if (aside) aside.style.transform = ""
+})
 </script>
 
 <template>
@@ -39,19 +84,6 @@ const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
           # {{ tag.name }}
         </a>
         <span v-if="!tags.length" class="empty" style="padding: 4px 0">暂无标签</span>
-      </div>
-    </div>
-
-    <div class="side-card">
-      <h3>概览</h3>
-      <div class="cat-row" style="cursor: default">
-        <span>文章</span><span class="n">{{ stats.article_count ?? '-' }}</span>
-      </div>
-      <div class="cat-row" style="cursor: default">
-        <span>分类</span><span class="n">{{ stats.category_count ?? '-' }}</span>
-      </div>
-      <div class="cat-row" style="cursor: default">
-        <span>标签</span><span class="n">{{ stats.tag_count ?? '-' }}</span>
       </div>
     </div>
 
