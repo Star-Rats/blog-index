@@ -55,6 +55,13 @@ const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
       </div>
     </div>
 
+    <!-- 引言卡：填充侧栏底部留白 -->
+    <div class="side-quote">
+      <span class="q-mark" aria-hidden="true">❝</span>
+      <p>纸上得来终觉浅，<br />绝知此事要躬行。</p>
+      <div class="q-from">—— 陆游《冬夜读书示子聿》</div>
+    </div>
+
     <div v-if="activeCategory" class="side-card" style="text-align: center">
       <a href="javascript:void(0)" class="chip" @click="emit('clear')">✕ 清除分类筛选</a>
     </div>
