@@ -753,9 +753,9 @@ button {
 }
 
 .toc-item {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--muted);
-  padding: 5px 10px;
+  padding: 5px 8px;
   border-left: 2px solid transparent;
   margin-left: -19px;
   cursor: pointer;
@@ -765,8 +765,8 @@ button {
   white-space: nowrap;
 }
 
-.toc-item.lv3 { padding-left: 24px; }
-.toc-item.lv4 { padding-left: 38px; font-size: 12.5px; }
+.toc-item.lv3 { padding-left: 22px; }
+.toc-item.lv4 { padding-left: 36px; font-size: 12px; }
 
 .toc-item:hover { color: var(--ink); }
 
@@ -835,8 +835,8 @@ button {
 @media (min-width: 1101px) {
   .article-with-toc {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 230px;
-    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) 185px;
+    gap: 24px;
     align-items: start;
   }
 }
