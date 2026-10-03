@@ -736,6 +736,26 @@ button {
   overflow-y: auto;
   border-left: 1px solid var(--border);
   padding: 4px 0 4px 18px;
+  /* 内部滚动条：纤细浅色，避免默认黑粗滚动条破坏版面 */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.toc-card::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-card::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.toc-card::-webkit-scrollbar-thumb:hover {
+  background: var(--faint);
+}
+
+.toc-card::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .toc-title {
