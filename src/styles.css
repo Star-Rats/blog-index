@@ -849,11 +849,16 @@ button {
     padding: 0 13px;
   }
 
-  /* 内容区单列，隐藏侧栏（分类/标签浏览走归档聚合页） */
+  /* 内容区单列，隐藏侧栏（分类/标签浏览走归档聚合页）
+     minmax(0,1fr)：防止封面图固有宽度通过 min-content 撑破视口 */
   .page-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 20px 0 40px;
     gap: 0;
+  }
+
+  .page-layout > main {
+    min-width: 0;
   }
 
   .page-layout > aside {
@@ -1006,6 +1011,33 @@ button {
   text-align: center;
   color: var(--faint);
   font-size: 13px;
+}
+
+/* 移动端分页：隐藏数字按钮，保留 上/下页 + 页码指示 */
+.page-indicator {
+  display: none;
+  min-width: 64px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .pagination .page-num {
+    display: none;
+  }
+
+  .pagination .page-indicator {
+    display: block;
+    align-self: center;
+    height: 34px;
+    line-height: 34px;
+  }
 }
 
 /* ===== 空状态/加载 ===== */
