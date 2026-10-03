@@ -48,7 +48,6 @@ function jump(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   activeId.value = id  // 点击即时反馈；滚动结束后由 onScroll 精确校正
   history.replaceState(null, '', `#${id}`)
-  mobileTocOpen.value = false
 }
 
 onMounted(() => {
@@ -139,32 +138,6 @@ function fmt(value) {
         </ul>
       </aside>
 
-      <!-- 移动端：浮动按钮展开大纲 -->
-      <transition name="toc-fade">
-        <div v-if="mobileTocOpen" class="toc-mobile-mask" @click="mobileTocOpen = false">
-          <div class="toc-mobile-panel" @click.stop>
-            <div class="toc-title">大纲</div>
-            <ul>
-              <li
-                v-for="item in toc"
-                :key="item.id"
-                :class="['toc-item', `lv${item.level}`, { active: activeId === item.id }]"
-                @click="jump(item.id)"
-              >
-                {{ item.text }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </transition>
-      <button
-        v-if="toc.length > 1"
-        class="toc-fab"
-        title="大纲"
-        @click="mobileTocOpen = true"
-      >
-        ☰
-      </button>
     </div>
 
     <div v-else class="loading">加载中…</div>

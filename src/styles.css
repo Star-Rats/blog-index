@@ -799,61 +799,6 @@ button {
 }
 
 /* 移动端浮动入口与抽屉 */
-.toc-fab {
-  display: none;
-  position: fixed;
-  right: 18px;
-  bottom: 26px;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: none;
-  background: var(--card);
-  color: var(--accent);
-  box-shadow: var(--shadow), 0 0 0 1px var(--border);
-  font-size: 20px;
-  z-index: 60;
-}
-
-.toc-mobile-mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(35, 39, 46, 0.45);
-  z-index: 80;
-  display: flex;
-  align-items: flex-end;
-}
-
-.toc-mobile-panel {
-  width: 100%;
-  max-height: 65vh;
-  overflow-y: auto;
-  background: var(--card);
-  border-radius: 16px 16px 0 0;
-  padding: 18px 18px 28px;
-}
-
-.toc-mobile-panel ul { list-style: none; margin: 0; padding: 0; }
-
-.toc-mobile-panel .toc-item {
-  padding: 9px 10px;
-  margin-left: 0;
-  border-left: none;
-  border-radius: 8px;
-  white-space: normal;
-}
-
-.toc-mobile-panel .toc-item.lv3 { padding-left: 26px; }
-.toc-mobile-panel .toc-item.lv4 { padding-left: 42px; }
-
-.toc-mobile-panel .toc-item.active {
-  background: var(--accent-soft);
-  border-left: none;
-}
-
-.toc-fade-enter-active, .toc-fade-leave-active { transition: opacity 0.2s; }
-.toc-fade-enter-from, .toc-fade-leave-to { opacity: 0; }
-
 /* 正文右侧预留 260px 给大纲（大纲固定于窗口右缘） */
 .article-with-toc {
   padding-right: 260px;
@@ -862,7 +807,6 @@ button {
 @media (max-width: 719px) {
   .article-with-toc { padding-right: 0; }
   .toc-card { display: none; }
-  .toc-fab { display: block; }
 }
 
 /* ===== 移动端适配（≤720px：手机竖屏） ===== */
