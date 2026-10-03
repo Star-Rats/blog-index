@@ -610,6 +610,57 @@ button {
 }
 
 /* ===== 移动端适配（≤720px：手机竖屏） ===== */
+/* ===== 侧栏装饰 ===== */
+.side-ornament {
+  height: 41px;   /* 与左侧「最新文章」标题行同高，使下方分类卡片与首篇文章卡片精确对齐 */
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.side-ornament .line {
+  flex: 1;
+  height: 1px;
+}
+
+.side-ornament .line:first-child {
+  background: linear-gradient(to right, transparent, var(--border));
+}
+
+.side-ornament .line:last-child {
+  background: linear-gradient(to left, transparent, var(--border));
+}
+
+.side-ornament .glyph {
+  color: var(--accent);
+  font-size: 12px;
+}
+
+.side-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.side-card h3::before {
+  content: '';
+  width: 3px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.85;
+}
+
+.side-tail {
+  text-align: center;
+  color: var(--faint);
+  font-size: 12px;
+  letter-spacing: 4px;
+  padding-top: 6px;
+}
+
 /* ===== 文章大纲（TOC） ===== */
 .article-with-toc {
   position: relative;

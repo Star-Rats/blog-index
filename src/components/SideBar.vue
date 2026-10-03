@@ -10,6 +10,13 @@ const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
 
 <template>
   <aside>
+    <!-- 顶部点缀：与左侧「最新文章」标题行同高，使分类卡片与首篇文章卡片对齐 -->
+    <div class="side-ornament" aria-hidden="true">
+      <span class="line"></span>
+      <span class="glyph">✦</span>
+      <span class="line"></span>
+    </div>
+
     <div class="side-card">
       <h3>分类</h3>
       <router-link
@@ -51,5 +58,7 @@ const emit = defineEmits(['filter-tag', 'filter-category', 'clear'])
     <div v-if="activeCategory" class="side-card" style="text-align: center">
       <a href="javascript:void(0)" class="chip" @click="emit('clear')">✕ 清除分类筛选</a>
     </div>
+
+    <div class="side-tail" aria-hidden="true">· ✦ ·</div>
   </aside>
 </template>
