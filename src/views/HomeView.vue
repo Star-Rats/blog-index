@@ -31,7 +31,7 @@ async function loadList() {
   try {
     const params = {
       page: Number(route.query.page) || 1,
-      page_size: 20,
+      page_size: 8,
     }
     if (query.value.category_id) params.category_id = query.value.category_id
     if (query.value.tag_id) params.tag_id = query.value.tag_id
