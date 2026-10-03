@@ -18,6 +18,11 @@ let ticking = false
 function syncNow() {
   const aside = document.querySelector(".page-layout > aside")
   if (!aside || window.innerWidth <= 720) return
+  // 页面顶部附近不介入：保持自然对齐位置，避免加载阶段的瞬态偏移
+  if (window.scrollY < 80) {
+    aside.style.transform = ""
+    return
+  }
   aside.style.transform = "none"
   // 底部跟随：侧栏底部到达视口底部上方 24px 后钉住跟随（此前保持自然位置）
   const y = Math.max(
