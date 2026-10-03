@@ -6,4 +6,20 @@ const api = axios.create({
   timeout: 15000,
 })
 
+// 统一 ApiResponse 解包：调用方仍从 res.data 取业务数据
+api.interceptors.response.use(
+  (res) => {
+    const body = res.data
+    if (body && typeof body === 'object' && 'code' in body) {
+      if (body.code === 20000) {
+        res.data = body.data
+        return res
+      }
+      return Promise.reject(new Error(body.message || '请求失败'))
+    }
+    return res
+  },
+  (err) => Promise.reject(err),
+)
+
 export default api
