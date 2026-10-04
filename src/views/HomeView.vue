@@ -97,7 +97,6 @@ const listTitle = computed(() => {
             @filter-tag="filterTag"
           />
         </div>
-        <SimplePagination :page="list.page" :pages="pages" @change="goPage" />
       </main>
       <SideBar
         :categories="home.categories"
@@ -107,6 +106,10 @@ const listTitle = computed(() => {
         @filter-tag="filterTag"
         @clear="clearCategory"
       />
+      <!-- 分页独立于网格第一行：侧栏吸附范围正好结束在最后一篇文章底部 -->
+      <div class="page-pagination">
+        <SimplePagination :page="list.page" :pages="pages" @change="goPage" />
+      </div>
     </div>
   </div>
 </template>

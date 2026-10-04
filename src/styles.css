@@ -61,9 +61,26 @@ button {
 .page-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-rows: auto auto;   /* 行1：文章+侧栏；行2：分页（仅文章列） */
   gap: 32px;
   align-items: start;
   padding: 28px 0 64px;
+}
+
+.page-layout > main {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.page-layout > aside {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.page-layout > .page-pagination {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
 }
 
 @media (max-width: 900px) {
@@ -611,10 +628,12 @@ button {
 
 /* ===== 移动端适配（≤720px：手机竖屏） ===== */
 /* ===== 侧栏装饰 ===== */
-/* 侧栏整栏吸附（紧凑后高度 ≤ 视口），滚动时始终完整可见 */
+/* 侧栏整栏吸附（紧凑后高度 ≤ 视口），滚动时始终完整可见；
+   吸附范围结束在最后一篇文章底部（分页行在网格第二行，不计入） */
 .page-layout > aside {
   position: sticky;
   top: 76px;
+  margin-bottom: 98px;   /* 分页行高度，使侧栏吸底时与最后一篇文章底对齐 */
 }
 
 .side-card {
